@@ -64,9 +64,9 @@ def test_preconditions_fail():
     for function, args in data:
         yield (assert_raises, conker.ConkerError, function, *args)
 
+    # Test keyword arguments & default values.
     yield assert_raises, conker.ConkerError, lambda: shout(text="")
     yield assert_raises, conker.ConkerError, lambda: shout()
-
     yield assert_raises, conker.ConkerError, lambda: scream_at("person", message="AAAAARGH")
     
 
