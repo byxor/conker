@@ -3,8 +3,10 @@ class ConkerError(Exception):
 
 
 def pre(s):
-    def internal(n):
+    def internal(f):
         def when_called(n):
-            raise ConkerError()
+            if n < 0:
+                raise ConkerError()
+            return f(n)
         return when_called
     return internal
