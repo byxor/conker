@@ -2,11 +2,13 @@ class ConkerError(Exception):
     pass
 
 
-def pre(s):
-    def internal(f):
-        def when_called(n):
-            if n < 0:
-                raise ConkerError()
-            return f(n)
+def pre(condition):
+    def decorated(function):
+        def when_called(arg):
+            locals()["name"] = arg
+            locals()["n"] = arg
+            code = f"if not ({condition}):\n    raise ConkerError()"
+            exec(code)
+            return function(arg)
         return when_called
-    return internal
+    return decorated

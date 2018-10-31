@@ -8,11 +8,17 @@ def square_root(n):
     return math.sqrt(n)
 
 
+@conker.pre("name != ''")
+def greet(name):
+    return f"Hello, {name}"
+
+
 def test_precondition_fails():
     yield assert_raises, conker.ConkerError, square_root, -1
+    yield assert_raises, conker.ConkerError, greet, ""
     
 
-def test_function_runs_correctly():
+def test_functions_run_correctly():
     data = [
         (9,  3),
         (16, 4),
