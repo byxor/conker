@@ -10,9 +10,9 @@ def square_root(n):
     return math.sqrt(n)
 
 
-@conker.pre("target != ''")
-def greet(target):
-    return f"Hello, {target}!"
+@conker.pre("name != ''")
+def greet(name):
+    return f"Hello, {name}!"
 
 
 @conker.pre("x != 0")

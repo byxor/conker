@@ -10,12 +10,10 @@ def pre(condition):
         names = inspect.getargspec(function).args
 
         def real(*args):
-            parameters = list(zip(names, args))
-            for k, v in parameters:
-                locals()[k] = v
+            parameters = dict(zip(names, args))
 
             try:
-                exec(f"assert {condition}")
+                exec(f"assert {condition}", parameters)
             except AssertionError:
                 raise ConkerError()
 
