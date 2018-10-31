@@ -6,10 +6,10 @@ class ConkerError(Exception):
 
 
 def pre(*conditions):
-    def decorated(function):
+    def decorator(function):
         names = inspect.getargspec(function).args
 
-        def real(*args):
+        def decorated(*args):
             parameters = dict(zip(names, args))
 
             try:
@@ -20,5 +20,5 @@ def pre(*conditions):
 
             return function(*args)
 
-        return real
-    return decorated
+        return decorated
+    return decorator

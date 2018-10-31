@@ -30,7 +30,8 @@ def subtract(x, y):
     "x <= 1",
 )
 def arcsin(x):
-    pass
+    import math
+    return math.asin(x)
 
 ##############################
 
@@ -42,6 +43,9 @@ def test_preconditions_fail():
         (greet,       [""]),
         (add,         [0, 1]),
         (subtract,    [5, 9]),
+        (arcsin,      [2]),
+        (arcsin,      [-2]),
+        (arcsin,      [1.1]),
     ]
     for function, args in data:
         yield (assert_raises, conker.ConkerError, function, *args)
@@ -61,6 +65,8 @@ def test_functions_run_correctly():
 
         (subtract, [20, 10], 10),
         (subtract, [50, 50], 0),
+
+        (arcsin, [0],  0),
     ]
     for function, args, expected in data:
         yield assert_equals, expected, function(*args)
