@@ -1,3 +1,6 @@
+import inspect
+
+
 class ConkerError(Exception):
     pass
 
@@ -5,10 +8,18 @@ class ConkerError(Exception):
 def pre(condition):
     def decorated(function):
         def when_called(arg):
-            locals()["name"] = arg
-            locals()["n"] = arg
-            code = f"if not ({condition}):\n    raise ConkerError()"
-            exec(code)
-            return function(arg)
+            name = inspect.getargspec(function).args[0]
+
+            def real(arg):
+                locals()[name] = arg
+
+                try:
+                    exec(f"assert {condition}")
+                except AssertionError:
+                    raise ConkerError()
+
+                return function(arg)
+
+            return real(arg)
         return when_called
     return decorated

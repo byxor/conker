@@ -8,9 +8,10 @@ def square_root(n):
     return math.sqrt(n)
 
 
-@conker.pre("name != ''")
-def greet(name):
-    return f"Hello, {name}"
+@conker.pre("target != ''")
+def greet(target):
+    pass
+    # return f"Hello, {name}"
 
 
 def test_precondition_fails():
