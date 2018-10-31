@@ -13,9 +13,20 @@ def greet(target):
     return f"Hello, {target}!"
 
 
-def test_precondition_fails():
-    yield assert_raises, conker.ConkerError, square_root, -1
-    yield assert_raises, conker.ConkerError, greet, ""
+@conker.pre("x != 0")
+def add(x, y):
+    return x + y
+
+
+def test_preconditions_fail():
+    data = [
+        (square_root, [-1]),
+        (square_root, [-2]),
+        (greet,       [""]),
+        (add,         [0, 1]),
+    ]
+    for function, args in data:
+        yield (assert_raises, conker.ConkerError, function, *args)
     
 
 def test_functions_run_correctly():
@@ -26,7 +37,9 @@ def test_functions_run_correctly():
 
         (greet, ["World"], "Hello, World!"),
         (greet, ["Byxor"], "Hello, Byxor!"),
+
+        (add, [10, 20], 30),
+        (add, [50, 10], 60),
     ]
     for function, args, expected in data:
         yield assert_equals, expected, function(*args)
-    
