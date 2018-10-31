@@ -42,6 +42,11 @@ def shout(text=""):
     pass
 
 
+@conker.pre("len(message) < 5")
+def scream_at(person, intensity=4, message="hey"):
+    pass
+    
+
 ##############################
 
 
@@ -61,6 +66,8 @@ def test_preconditions_fail():
 
     yield assert_raises, conker.ConkerError, lambda: shout(text="")
     yield assert_raises, conker.ConkerError, lambda: shout()
+
+    yield assert_raises, conker.ConkerError, lambda: scream_at("person", message="AAAAARGH")
     
 
 def test_functions_run_correctly():

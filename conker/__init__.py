@@ -18,6 +18,7 @@ def pre(*conditions):
             parameters = dict(zip(arg_names, arg_values))
             parameters.update(kwargs)
 
+            print(parameters)
 
             try:
                 for condition in conditions:
