@@ -29,8 +29,8 @@ print(square_root(-1)) # raises ConkerError
 
 ```python
 @pre(
-    "isinstance('account', Account)",
-    "isinstance('reason', str)",
+    "isinstance('account',           Account)",
+    "isinstance('reason',            str)",
     "isinstance('duration_in_hours', (int, float))",
     "duration_in_hours > 0",
 )
