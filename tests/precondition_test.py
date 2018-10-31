@@ -10,8 +10,7 @@ def square_root(n):
 
 @conker.pre("target != ''")
 def greet(target):
-    pass
-    # return f"Hello, {name}"
+    return f"Hello, {target}!"
 
 
 def test_precondition_fails():
@@ -21,10 +20,13 @@ def test_precondition_fails():
 
 def test_functions_run_correctly():
     data = [
-        (9,  3),
-        (16, 4),
-        (25, 5),
+        (square_root, [9],  3),
+        (square_root, [16], 4),
+        (square_root, [25], 5),
+
+        (greet, ["World"], "Hello, World!"),
+        (greet, ["Byxor"], "Hello, Byxor!"),
     ]
-    for n, expected in data:
-        yield assert_equals, expected, square_root(n)
+    for function, args, expected in data:
+        yield assert_equals, expected, function(*args)
     
