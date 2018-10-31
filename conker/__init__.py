@@ -5,7 +5,7 @@ class ConkerError(Exception):
     pass
 
 
-def pre(condition):
+def pre(*conditions):
     def decorated(function):
         names = inspect.getargspec(function).args
 
@@ -13,7 +13,8 @@ def pre(condition):
             parameters = dict(zip(names, args))
 
             try:
-                exec(f"assert {condition}", parameters)
+                for condition in conditions:
+                    exec(f"assert {condition}", parameters)
             except AssertionError:
                 raise ConkerError()
 

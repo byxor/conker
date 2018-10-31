@@ -24,6 +24,14 @@ def add(x, y):
 def subtract(x, y):
     return x - y
 
+
+@conker.pre(
+    "x >= -1",
+    "x <= 1",
+)
+def arcsin(x):
+    pass
+
 ##############################
 
 
