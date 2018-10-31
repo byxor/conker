@@ -7,19 +7,19 @@ class ConkerError(Exception):
 
 def pre(condition):
     def decorated(function):
-        def when_called(*args):
-            name = inspect.getargspec(function).args[0]
+        names = inspect.getargspec(function).args
 
-            def real(*args):
-                locals()[name] = args[0]
+        def real(*args):
+            parameters = list(zip(names, args))
+            for k, v in parameters:
+                locals()[k] = v
 
-                try:
-                    exec(f"assert {condition}")
-                except AssertionError:
-                    raise ConkerError()
+            try:
+                exec(f"assert {condition}")
+            except AssertionError:
+                raise ConkerError()
 
-                return function(*args)
+            return function(*args)
 
-            return real(*args)
-        return when_called
+        return real
     return decorated
