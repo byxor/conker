@@ -7,10 +7,17 @@ class ConkerError(Exception):
 
 def pre(*conditions):
     def decorator(function):
-        names = inspect.getargspec(function).args
+        arg_spec = inspect.getargspec(function)
+        arg_names = arg_spec.args
 
-        def decorated(*args):
-            parameters = dict(zip(names, args))
+        def decorated(*args, **kwargs):
+            arg_values = args
+            if arg_spec.defaults:
+                arg_values += arg_spec.defaults
+
+            parameters = dict(zip(arg_names, arg_values))
+            parameters.update(kwargs)
+
 
             try:
                 for condition in conditions:

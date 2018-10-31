@@ -4,6 +4,7 @@ from nose.tools import assert_raises, assert_equals
 
 ##############################
 
+
 @conker.pre("n >= 0")
 def square_root(n):
     import math
@@ -33,6 +34,14 @@ def arcsin(x):
     import math
     return math.asin(x)
 
+
+@conker.pre(
+    "text != ''"
+)
+def shout(text=""):
+    pass
+
+
 ##############################
 
 
@@ -49,6 +58,9 @@ def test_preconditions_fail():
     ]
     for function, args in data:
         yield (assert_raises, conker.ConkerError, function, *args)
+
+    yield assert_raises, conker.ConkerError, lambda: shout(text="")
+    yield assert_raises, conker.ConkerError, lambda: shout()
     
 
 def test_functions_run_correctly():
