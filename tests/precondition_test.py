@@ -1,5 +1,5 @@
 import conker
-from nose.tools import assert_raises, assert_equals
+from nose.tools import assert_raises, assert_equals, assert_false
 
 
 ##############################
@@ -89,3 +89,18 @@ def test_functions_run_correctly():
     ]
     for function, args, expected in data:
         yield assert_equals, expected, function(*args)
+
+
+def test_that_state_cannot_be_modified():
+    variable_name = 'A_VARIABLE'
+    
+    @conker.pre(f"setattr(globals(), '{variable_name}', True)")
+    def foo():
+        return "whatever"
+
+    try:
+        foo()
+    except:
+        pass
+    
+    yield assert_false, hasattr(globals(), variable_name)

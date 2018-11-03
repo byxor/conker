@@ -18,6 +18,13 @@ def pre(*conditions):
             parameters = dict(zip(arg_names, arg_values))
             parameters.update(kwargs)
 
+            print()
+            print("######")
+            print(globals())
+            print("######")
+            print(locals())
+            print("######")
+
             print(parameters)
 
             try:
