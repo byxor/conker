@@ -1,5 +1,5 @@
 # conker
-Contracts for python
+Contracts (preconditions and postconditions) for python
 
 ## Install
 
